@@ -30,7 +30,7 @@ export default async function Home() {
 
           {documents && documents.length > 0 && (
             <ul className="divide-y divide-gray-100">
-              {documents.map((doc: any) => (
+              {documents.map((doc: { id: string | number; title?: string; status?: string }) => (
                 <li key={doc.id} className="py-3 flex justify-between items-center">
                   <div>
                     <p className="font-medium">{doc.title || "เอกสารไม่มีชื่อ"}</p>
