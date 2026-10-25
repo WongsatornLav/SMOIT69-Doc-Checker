@@ -1,10 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import type { Database } from "@/types/database";
 
 export async function createClient() {
   const cookieStore = await cookies();
-  return createServerClient<Database>(
+
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -18,7 +18,7 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             );
           } catch {
-            // เรียกจาก Server Component จะ set cookie ไม่ได้ ไม่เป็นไร middleware จัดการให้
+            // Server Component เรียกใช้ set อาจจะข้ามไปกรณีอยู่ใน Server Action
           }
         },
       },

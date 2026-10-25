@@ -1,12 +1,23 @@
 import { createClient } from "@/lib/supabase/server";
 
+import { logout } from "./login/actions";
+
+
 export default async function Home() {
-  // เพิ่มวงเล็บ () ต่อท้าย เพื่อเรียกใช้ฟังก์ชันสร้าง client ครับ
+
   const supabase = await createClient();
-  
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+
   const { data: documents, error } = await supabase
+
     .from("documents")
+
     .select("*")
+
+    .order("created_at", { ascending: false }) // ถ้าไม่มีคอลัมน์ created_at ให้ลบบรรทัดนี้
+
     .limit(10);
 
   return (
